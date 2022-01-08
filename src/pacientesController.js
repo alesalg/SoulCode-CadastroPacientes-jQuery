@@ -75,9 +75,11 @@ export default class PacientesController {
 
     setupDelete(paciente) {
         $(`#btn-del-${paciente.id}`).click(() => {
-            this.model.delete(paciente.id);
-            this.build();
-            this.deleteToast.show();
+            if(confirm("Você deseja deletar o cadastro Paciente ?") === true) {
+                this.model.delete(paciente.id);
+                this.build();
+                this.deleteToast.show();
+            } 
         });
     }
 
@@ -94,7 +96,7 @@ export default class PacientesController {
                 <td>${paciente.cpf}</td>
                 <td>${paciente.rg}</td>
                 <td>${paciente.cep}</td>
-                <td>
+                <td class="text-center">
                     <button id="btn-edit-${paciente.id}" class="btn btn-warning btn-sm">
                         <i class="bi bi-pencil-fill"></i>
                     </button>
