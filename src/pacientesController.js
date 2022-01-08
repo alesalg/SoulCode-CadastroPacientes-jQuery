@@ -14,6 +14,9 @@ export default class PacientesController {
     setupForm() {
         $("#telefone, #telefone_edit").mask("(00) 00000-0000");
         $("#cpf, #cpf_edit").mask("000.000.000-00");
+        //(FIXES, máscaras para os campos de CEP e RG)
+        $("#rg, #rg_edit").mask("0.000.000")
+        $("#cep, #cep_edit").mask("00000-000")
 
         $("#edit_paciente").submit((e) => {
             e.preventDefault();
@@ -25,6 +28,8 @@ export default class PacientesController {
                 email: inputs[2].value,
                 telefone: inputs[3].value,
                 cpf: inputs[4].value,
+                rg: inputs[5].value,
+                cep: inputs[6].value
             }; 
 
             this.model.edit(id, data);
@@ -59,6 +64,9 @@ export default class PacientesController {
             $("#email_edit").val(paciente.email);
             $("#telefone_edit").val(paciente.telefone);
             $("#cpf_edit").val(paciente.cpf);
+            //Add Rg e Cep modal edit
+            $("#rg_edit").val(paciente.rg);
+            $("#cep_edit").val(paciente.cep);
 
             this.editModal.show();
         })
@@ -82,6 +90,8 @@ export default class PacientesController {
                 <td>${paciente.email}</td>
                 <td>${paciente.telefone}</td>
                 <td>${paciente.cpf}</td>
+                <td>${paciente.rg}</td>
+                <td>${paciente.cep}</td>
                 <td>
                     <button id="btn-edit-${paciente.id}" class="btn btn-warning btn-sm">
                         <i class="bi bi-pencil-fill"></i>
