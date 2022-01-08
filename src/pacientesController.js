@@ -2,6 +2,7 @@ export default class PacientesController {
 
     editModal = new bootstrap.Modal(document.getElementById("edit-modal"));
     editToast = new bootstrap.Toast(document.getElementById("edit_toast"));
+    deleteToast = new bootstrap.Toast(document.getElementById("delete_toast"))
 
     constructor(seletor, model) {
         this.seletor = seletor; // id do tbody
@@ -76,6 +77,7 @@ export default class PacientesController {
         $(`#btn-del-${paciente.id}`).click(() => {
             this.model.delete(paciente.id);
             this.build();
+            this.deleteToast.show();
         });
     }
 
