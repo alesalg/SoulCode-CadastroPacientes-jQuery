@@ -75,7 +75,7 @@ export default class PacientesController {
 
     setupDelete(paciente) {
         $(`#btn-del-${paciente.id}`).click(() => {
-            if(confirm("Você deseja deletar o cadastro Paciente ?") === true) {
+            if(confirm("Você deseja deletar o cadastro do Paciente ?") === true) {
                 this.model.delete(paciente.id);
                 this.build();
                 this.deleteToast.show();
@@ -84,8 +84,15 @@ export default class PacientesController {
     }
 
     build () {
+        console.log(this.model.pacientes.length)
+        if(this.model.pacientes.length > 0) {
+            $("#table").removeClass("d-none")
+            $("#tableVazia").addClass("d-none")
+        } else {
+            $("#table").addClass("d-none")
+            $("#tableVazia").removeClass("d-none")
+        }
         $(this.seletor).empty();
-
         this.model.pacientes.forEach((paciente) => {
             $(this.seletor).append(`
             <tr>
