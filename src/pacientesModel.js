@@ -3,12 +3,18 @@ export default class PacientesModel {
     currentId = 1;
 
     add(data) {
-        this.pacientes.push({
-            ...data,
-            id: this.currentId,
-        });
-
-        this.currentId++;
+        if(data.nome === "" || data.email === "" || data.telefone === "" || data.cpf === "" || data.rg === "" || data.cep === ""){
+            $("add_paciente").addClass("needs-validation");
+            return none;
+        } else {
+            $("add_paciente").removeClass("needs-validation");
+            this.pacientes.push({
+                ...data,
+                id: this.currentId,
+            });
+            this.currentId++;
+        }        
+        
     }
 
     edit(id, data) {

@@ -37,7 +37,6 @@ export default class PacientesController {
             this.build();
             this.editModal.hide();
             this.editToast.show({ autohide: true});
-
             $("#edit_paciente input").val("");
         });
     }
@@ -49,11 +48,13 @@ export default class PacientesController {
             const data = {};
 
             inputs.forEach((input) => {
-                data[input.name] = input.value;
+                data[input.name] = input.value;                
             });
-
             this.model.add(data);
             $("#add_paciente input").val("");
+            const db_paciente = JSON.parse(localStorage.getItem('db_paciente')) ?? []
+            db_paciente.push (data);
+            localStorage.setItem("db_paciente", JSON.stringify(db_paciente))
             this.build();
         });
     }
@@ -83,8 +84,29 @@ export default class PacientesController {
         });
     }
 
+    validarBootstrap() {
+        (function () {
+            'use strict'
+        
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+        
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+        
+                form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    }
+
     build () {
-        console.log(this.model.pacientes.length)
         if(this.model.pacientes.length > 0) {
             $("#table").removeClass("d-none")
             $("#tableVazia").addClass("d-none")
@@ -93,6 +115,7 @@ export default class PacientesController {
             $("#tableVazia").removeClass("d-none")
         }
         $(this.seletor).empty();
+        this.validarBootstrap();
         this.model.pacientes.forEach((paciente) => {
             $(this.seletor).append(`
             <tr>
@@ -113,7 +136,7 @@ export default class PacientesController {
                 </td>
             </tr>
             `)
-
+            
             this.setupEdit(paciente);
             this.setupDelete(paciente);
         });
